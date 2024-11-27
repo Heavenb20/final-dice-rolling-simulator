@@ -8,7 +8,7 @@ def main():
     print("Welcome to the Dice Rolling Simulator!")
     while True:
         # Ask user if they want to roll the dice
-        user_input = input("Type 'roll' to roll the dice or 'quit' to exit: ").lower()
+        user_input = input("Type 'roll' to roll the dice or 'quit' to exit: ").strip().lower()
 
         if user_input == 'roll':
             print(f"You rolled a {roll_dice()}!")
@@ -18,5 +18,5 @@ def main():
         else:
             print("Invalid input! Type 'roll' or 'quit'.")
 
-if __name__ == "__main__":
-    main()
+# Call the main function directly
+main()
