@@ -1,15 +1,21 @@
 # Dice Rolling Simulator
 
-This Python program simulates rolling a dice. Each time the program is run, it randomly generates a number between 1 and 6, mimicking a dice roll.
+This program simulates a dice rolling game where each player rolls a die, and the player with the highest roll wins. The game also tracks the frequency of each dice face (1-6) and visualizes the results using a bar chart.
 
-## How to Run the Program
+## Features:
+- Players take turns rolling a six-sided die.
+- The total time for all turns is tracked.
+- A bar chart is generated showing the distribution of dice rolls.
 
-1. Make sure you have Python installed on your computer.
-   - You can download Python from [python.org](https://www.python.org/downloads/).
-2. Download or clone this project folder to your local machine.
-3. Open a terminal or command prompt.
-4. Navigate to the folder where the `dice_simulator.py` file is located.
-5. Run the program by typing the following command:
-   ```bash
-   python dice_simulator.py
+## How to Run:
+1. Clone the repository or download the `dice_simulator.py` file.
+2. Run the program using the command: `python dice_simulator.py`.
+
+## Special Features:
+- **Seaborn Visualization**: A bar chart shows how often each die face appeared.
+- **Timing Analysis**: The program tracks and displays how long the game took, and the time for each player's turn.
+
+## License:
+MIT License
+
 

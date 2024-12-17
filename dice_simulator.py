@@ -1,69 +1,69 @@
 import random
+import seaborn as sns
+import matplotlib.pyplot as plt
+import time
 
-def roll_dice(player_name):
-    """
-    Simulate rolling a dice (1 to 6) and return the result as a tuple.
+def roll_dice():
+    # Simulate rolling a dice and return a random number from 1 to 6
+    return random.randint(1, 6)
 
-    Args:
-        player_name (str): The name of the player rolling the dice.
+def player_turn(player_num):
+    # Ask the player to press Enter to roll the dice
+    print(f"Player {player_num}'s turn:")
+    input("Press Enter to roll the dice...")  
+    roll = roll_dice()
+    print(f"Player {player_num} rolled: {roll}")
+    return (player_num, roll)
 
-    Returns:
-        tuple: A tuple containing the player's name and the dice roll.
-    """
-    # Generate a random number between 1 and 6 to simulate a dice roll
-    roll_result = random.randint(1, 6)
-    return (player_name, roll_result)
+def show_results(players):
+    # Display all players' rolls and find the winner
+    print("\nResults:")
+    for player, roll in players:
+        print(f"Player {player} rolled: {roll}")
+    
+    # Find the player with the highest roll
+    winner = max(players, key=lambda x: x[1])
+    print(f"\n{winner[0]} wins with a roll of {winner[1]}!")
 
-def log_rolls_to_file(rolls):
-    """
-    Log the dice rolls to a text file.
-
-    Args:
-        rolls (list of tuples): List of tuples with player name and roll results.
-    """
-    try:
-        # Open the file in write mode and save the rolls
-        with open("dice_rolls.txt", "w") as file:
-            for roll in rolls:
-                # Write each roll result in a readable format
-                file.write(f"{roll[0]} rolled a {roll[1]}\n")
-        print("Game results have been saved to 'dice_rolls.txt'.")
-    except Exception as e:
-        print(f"An error occurred while saving the game results: {e}")
+def plot_rolls(roll_count):
+    # Create a bar chart showing the frequency of each dice roll (1-6)
+    sns.set(style="darkgrid")
+    plt.figure(figsize=(8, 6))
+    sns.barplot(x=[1, 2, 3, 4, 5, 6], y=roll_count)
+    plt.title("Dice Roll Distribution")
+    plt.xlabel("Dice Face")
+    plt.ylabel("Frequency")
+    plt.show()
 
 def main():
-    """
-    Main function to run the Dice Rolling Simulator game.
-    """
     print("Welcome to the Dice Rolling Simulator!")
     
-    # Get the player's name
-    player_name = input("Enter your name: ").strip()
-    rolls = []  # List to store all rolls
+    # Ask how many players are playing
+    num_players = int(input("How many players? "))
+    
+    players = []
+    roll_count = [0] * 6  # Track how often each roll (1-6) occurs
+    total_time = 0  # Track how long the game takes
 
-    while True:
-        try:
-            # Ask the user for input to roll the dice or quit the game
-            user_input = input("Type 'roll' to roll the dice or 'quit' to exit: ").strip().lower()
+    for i in range(1, num_players + 1):
+        # For each player, roll the dice and track the time
+        start_time = time.time()
+        player, roll = player_turn(i)
+        players.append((player, roll))
+        roll_count[roll - 1] += 1  # Count the roll
+        total_time += (time.time() - start_time)  # Add the time for this player's turn
 
-            if user_input == 'roll':
-                result = roll_dice(player_name)  # Roll the dice
-                rolls.append(result)  # Store the result in the list
-                print(f"{result[0]} rolled a {result[1]}")
-            elif user_input == 'quit':
-                print("Thanks for playing!")
-                print("Game Summary:")
-                # Display the summary of all rolls
-                for roll in rolls:
-                    print(f"{roll[0]} rolled a {roll[1]}")
-                log_rolls_to_file(rolls)  # Save results to file
-                break  # Exit the game loop
-            else:
-                print("Invalid input! Type 'roll' or 'quit'.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+    # Show the final results
+    show_results(players)
+    
+    # Show the bar chart of dice rolls
+    plot_rolls(roll_count)
+    
+    # Show how long the game took
+    print(f"\nTotal time for all turns: {total_time:.2f} seconds")
 
-# Call the main function to start the game
+# Run the game directly (no need for if __name__ block)
 main()
+
 
 
